@@ -1,4 +1,4 @@
-package smartgrass;
+package SmartGrass;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -35,5 +35,11 @@ class SensorData{
     public MoistureState getMoistureState(){
         return moistureState;
     }
+	@Override
+	public String toString() {
+		return "SensorData [vitaminState=" + vitaminState + ", moistureState=" + moistureState + "]";
+	}
+    
+    
 
 }

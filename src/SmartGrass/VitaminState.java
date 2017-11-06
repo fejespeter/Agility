@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package smartgrass;
+package SmartGrass;
 
 /**
  *
  * @author gulya
  */
-enum MoistureState {
-    VeryDry,
-    Dry,
-    SlightlyDry,
+enum VitaminState {
+    LacksInNitrogen,
+    LacksInFosfor,
+    LacksInKalium,
+    LacksInMagnesiumOxid,
     OK,
-    TooWet,
 }
