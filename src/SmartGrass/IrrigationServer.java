@@ -5,6 +5,10 @@
  */
 package SmartGrass;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -13,12 +17,20 @@ import java.util.logging.Logger;
  * @author gulya
  */
 class IrrigationServer {
+    
+    private Map<SensorData,Integer> sensorDatas=new HashMap<>();
+    public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-	public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-
-	void receiveData(int id, SensorData sensorData) {
-		
+    void receiveData(int id, SensorData sensorData) {
         logger.info("Sensor " + id + ": "+sensorData.toString());
+        sensorDatas.put(sensorData, id);
     }
+    
+    public Map getSensorDataCollection(){
+
+        return sensorDatas;
+    }
+    
+    
     
 }
