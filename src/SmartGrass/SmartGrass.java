@@ -5,6 +5,8 @@
  */
 package SmartGrass;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author gulya
@@ -12,6 +14,7 @@ package SmartGrass;
 public class SmartGrass {
 
 	public static final int sensorCount = 10;
+	public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 	
     /**
      * @param args the command line arguments
@@ -22,7 +25,9 @@ public class SmartGrass {
     	
     	for(int i = 0; i< sensorCount; i++) {
     		Sensor sensor = new Sensor(i, server);
+    		server.addSensor(sensor);
     		sensor.start();
+    		logger.info("Sensor created and started with id " + i);
     	}
     	
     }

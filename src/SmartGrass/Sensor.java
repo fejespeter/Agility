@@ -17,18 +17,38 @@ public class Sensor extends Thread {
 		this.id = id;
 		this.server = server;
 	}
+	
+	public long getId() {
+		return id;
+	}
 
-	private void sendSensorDataToServer() {
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public void sendSensorDataToServer() {
 		server.receiveData(id, sensorData);
 	}
 
-	private void readSensor() {
+	public void readSensor() {
 		if (sensorData != null) {
 			sensorData.setMoistureState(generateRandomMoistureState());
 			sensorData.setVitaminState(generateRandomVitaminState());
 		}
 		else {
 			sensorData = new SensorData(generateRandomVitaminState(), generateRandomMoistureState());
+		}
+	}
+	
+	public void readSensor(VitaminState vitamine, MoistureState moisture) {
+		if (sensorData != null) {
+			sensorData.setMoistureState(moisture);
+			sensorData.setVitaminState(vitamine);
+		}
+		else {
+			sensorData = new SensorData(vitamine, moisture);
 		}
 	}
 
