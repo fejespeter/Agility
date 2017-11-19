@@ -100,4 +100,12 @@ public class Sensor extends Thread {
 		}
 		return null;
 	}
+
+    void receiveWater() {
+        
+    }
+
+    void receiveVitamin() {
+        
+    }
 }

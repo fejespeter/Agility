@@ -6,6 +6,7 @@
 package SmartGrass;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +17,27 @@ import java.util.logging.Logger;
  *
  * @author gulya
  */
-class IrrigationServer {
+class IrrigationServer extends Thread{
+    //now thread safe
+    private List<Sensor> sensors = new ArrayList<>();
     
-	private List<Sensor> sensors = new ArrayList<>();
-    private Map<SensorData,Integer> sensorDatas=new HashMap<>();
+    private Map<SensorData,Integer> sensorDatas=Collections.synchronizedMap(new HashMap<>());
     public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private List<SensorRow> sensorRowList=new ArrayList<>();
+    public Irrigator irrigator=new Irrigator();
+    
+    @Override
+	public void run() {
+            while (true) {
+		try {
+                    Thread.sleep(100*1000);
+                    sendCommandsToIrrigator();
+                    
+		} catch (InterruptedException ex) {
+                    ex.printStackTrace();
+		}
+            }
+        }
 
     void receiveData(int id, SensorData sensorData) {
         logger.info("Sensor " + id + ": "+sensorData.toString());
@@ -92,12 +109,28 @@ class IrrigationServer {
     	if(sensors == null) 
     		sensors = new ArrayList<>();
     	sensors.add(s);
-    		
+        if(sensorRowList.size()==0){
+                sensorRowList.add(new SensorRow());
+                sensorRowList.add(new SensorRow());
+                irrigator.synchronizeSensorList(sensorRowList);
+            }
+    	if(s.getId()%2==0){
+            sensorRowList.get(0).addSensor(s);
+        }
+        else{
+            sensorRowList.get(1).addSensor(s);
+        }
     }
     
     public void removeSensor(Sensor s) {
     	if(sensors != null && sensors.contains(s))
     		sensors.remove(s);
+    }
+
+    public void sendCommandsToIrrigator() {
+        //TODO:calculate minimal quantities of water and vitamins for each row
+        //TODO:irrigate (irrigator.irrigate(SensorRow sr))
+        irrigator.irrigateSensorRowWithVater(sensorRowList.get(0));
     }
     
 }

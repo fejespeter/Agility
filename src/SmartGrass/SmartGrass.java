@@ -7,10 +7,7 @@ package SmartGrass;
 
 import java.util.logging.Logger;
 
-/**
- *
- * @author gulya
- */
+
 public class SmartGrass {
 
 	public static final int sensorCount = 10;

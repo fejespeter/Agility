@@ -6,10 +6,6 @@ package SmartGrass;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author gulya
- */
 class SensorData{
     private VitaminState vitaminState;
     private MoistureState moistureState;

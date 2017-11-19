@@ -5,10 +5,7 @@
  */
 package SmartGrass;
 
-/**
- *
- * @author gulya
- */
+
 enum MoistureState {
     VeryDry,
     Dry,
