@@ -21,6 +21,8 @@ class IrrigationServer extends Thread{
     //now thread safe
     private List<Sensor> sensors = new ArrayList<>();
     
+    protected static Integer REFRESH_INTERVAL = 100*1000;
+    
     private Map<SensorData,Integer> sensorDatas=Collections.synchronizedMap(new HashMap<>());
     public static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private List<SensorRow> sensorRowList=new ArrayList<>();
@@ -28,16 +30,16 @@ class IrrigationServer extends Thread{
     
     @Override
 	public void run() {
-            while (true) {
-		try {
-                    Thread.sleep(100*1000);
+        while (true) {
+        	try {
+                    Thread.sleep(REFRESH_INTERVAL);
                     sendCommandsToIrrigator();
                     
-		} catch (InterruptedException ex) {
+        	} catch (InterruptedException ex) {
                     ex.printStackTrace();
-		}
-            }
+        	}
         }
+    }
 
     void receiveData(int id, SensorData sensorData) {
         logger.info("Sensor " + id + ": "+sensorData.toString());
@@ -86,7 +88,7 @@ class IrrigationServer extends Thread{
     		logger.info("Sensor " + id + " needs small water");
     		return true;
     	case TooWet:
-    		logger.info("Sensor " + id + " is to wet");
+    		logger.info("Sensor " + id + " is too wet");
     		return false;
     	case VeryDry: 
     		logger.info("Sensor " + id + " needs a lot of water");
@@ -106,14 +108,15 @@ class IrrigationServer extends Thread{
     }
     
     public void addSensor(Sensor s) {
-    	if(sensors == null) 
+    	if(sensors == null){ 
     		sensors = new ArrayList<>();
-    	sensors.add(s);
+    	}    	
+    	sensors.add(s);  	
         if(sensorRowList.size()==0){
                 sensorRowList.add(new SensorRow());
                 sensorRowList.add(new SensorRow());
                 irrigator.synchronizeSensorList(sensorRowList);
-            }
+        }
     	if(s.getId()%2==0){
             sensorRowList.get(0).addSensor(s);
         }

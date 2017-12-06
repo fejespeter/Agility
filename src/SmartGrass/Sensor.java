@@ -9,9 +9,9 @@ import java.util.Random;
 
 public class Sensor extends Thread {
 
-	private int id;
-	private SensorData sensorData;
-	private IrrigationServer server;
+	protected int id;
+	protected SensorData sensorData;
+	protected IrrigationServer server;
 
 	public Sensor(int id, IrrigationServer server) {
 		this.id = id;

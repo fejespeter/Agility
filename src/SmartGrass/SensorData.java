@@ -6,9 +6,13 @@ package SmartGrass;
  * and open the template in the editor.
  */
 
+/**
+ * Stores the current data of a sensor.
+ *
+ */
 class SensorData{
-    private VitaminState vitaminState;
-    private MoistureState moistureState;
+    protected VitaminState vitaminState;
+    protected MoistureState moistureState;
     
     public SensorData(){
         
